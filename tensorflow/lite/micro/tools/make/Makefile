@@ -481,6 +481,7 @@ $(TENSORFLOW_ROOT)tensorflow/lite/micro/kernels/unpack.cc \
 $(TENSORFLOW_ROOT)tensorflow/lite/micro/kernels/var_handle.cc \
 $(TENSORFLOW_ROOT)tensorflow/lite/micro/kernels/while.cc \
 $(TENSORFLOW_ROOT)tensorflow/lite/micro/kernels/zeros_like.cc
+$(TENSORFLOW_ROOT)tensorflow/lite/micro/kernels/gelu.cc
 
 MICROLITE_CC_SIGNAL_KERNEL_SRCS := \
 $(TENSORFLOW_ROOT)signal/micro/kernels/delay.cc \
