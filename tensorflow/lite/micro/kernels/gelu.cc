@@ -25,8 +25,8 @@ limitations under the License.
 namespace tflite {
 
 void* GeluInit(TfLiteContext* context, const char* buffer,
-               size_t length) {  // todo
-  TFLITE_DCHECK(context->AllocatePersistentBuffer != nullptr);
+               size_t length) {                                 // todo
+  TFLITE_DCHECK(context->AllocatePersistentBuffer != nullptr);  // nullptr check
   return context->AllocatePersistentBuffer(context, sizeof(GeluOpData));
 }
 

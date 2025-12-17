@@ -1016,6 +1016,10 @@ struct LeakyReluParams {
   int32_t output_shift_identity;
 };
 
+// Gelu Params
+struct GeluParams {
+}
+
 template <typename P>
 inline void SetActivationParams(float min, float max, P* params) {
   params->float_activation_min = min;

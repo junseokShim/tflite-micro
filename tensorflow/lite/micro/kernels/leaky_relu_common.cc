@@ -32,17 +32,13 @@ TfLiteStatus CalculateOpDataLeakyRelu(TfLiteContext* context,
                                       TfLiteNode* node) {
   MicroContext* micro_context = GetMicroContext(context);
 
-  TF_LITE_ENSURE_EQ(context, NumInputs(node), 1);
-  TF_LITE_ENSURE_EQ(context, NumOutputs(node), 1);
   TfLiteTensor* input =
       micro_context->AllocateTempInputTensor(node, kInputTensor);
-  TF_LITE_ENSURE(context, input != nullptr);
   TfLiteTensor* output =
       micro_context->AllocateTempOutputTensor(node, kOutputTensor);
-  TF_LITE_ENSURE(context, output != nullptr);
-  TF_LITE_ENSURE_TYPES_EQ(context, input->type, output->type);
 
   if (output->type == kTfLiteInt8 || output->type == kTfLiteInt16) {
+    // input, output zero point 설정
     LeakyReluOpData* data = static_cast<LeakyReluOpData*>(node->user_data);
     const auto* params =
         static_cast<TfLiteLeakyReluParams*>(node->builtin_data);
@@ -50,6 +46,7 @@ TfLiteStatus CalculateOpDataLeakyRelu(TfLiteContext* context,
     data->input_zero_point = input->params.zero_point;
     data->output_zero_point = output->params.zero_point;
 
+    // output_shift_alpha 설정
     int output_shift_alpha;
     double alpha_multiplier = static_cast<double>(
         input->params.scale * params->alpha / output->params.scale);
@@ -57,6 +54,7 @@ TfLiteStatus CalculateOpDataLeakyRelu(TfLiteContext* context,
                        &output_shift_alpha);
     data->output_shift_alpha = static_cast<int32_t>(output_shift_alpha);
 
+    // output_shift_identity 설정
     int output_shift_identity;
     double identity_multiplier =
         static_cast<double>(input->params.scale / output->params.scale);
